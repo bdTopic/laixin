@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
-
-let names = ['Amy', 'Joe', 'Eve', 'Bob']
+require('./threeItem.less');
 
 class ThreeItem extends Component {
     render () {
+        let itemData = this.props.itemData;
+        let rows = [];
+        let imageSrc = itemData.abstract.image;
+        let len=imageSrc.length;
+        for(let i=0;i<len&&i<3;i++ ) {
+            rows.push(
+                <img src = {imageSrc[i]} className="imgItem"/>
+            );
+        }
+
         return (
             <div>
-                <h3>DEMO 2, JSX syntax你好啊a1d2aaa</h3>
-                <ul>
-                    {
-                        names.map( (name) => {
-                            return ( <li key={ name }>Hello, { name }!</li> )
-                        } )
-                    }
-                </ul>
-                <hr/>
+                <div className="itemTitle">{itemData.abstract.text}</div>
+                <div className="imgRow">{rows}</div>
             </div>
         )
     }
