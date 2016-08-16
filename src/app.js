@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Component1 from './component/itemOne/demo1'
 import ThreeItem from './component/itemThree/threeItem'
+import OneItem from './component/itemOne/oneItem'
 import $ from 'jquery';
 require('./app.less');
 
@@ -32,28 +32,48 @@ require('./app.less');
             }
         });
     }
+     initHeader=()=>{
+         let url = 'http://just.baidu.com/restapi/public/topicmeta?topicid=2523888542&version=1.0';
+         let setState = this._setState.bind(this);
+         this.serverRequestHeader = $.ajax({
+             type: "GET",
+             url: url,
+             dataType: "jsonp",
+             success : function(data){
+                 // console.log(data);
+                 var title = data.response_params.topic_list[0].title;
+                 var imgUrl = data.response_params.topic_list[0].logo.small;
+                 var subscribe = data.response_params.topic_list[0].subscribe + '人关注';
+                 $('#topTitle').html(title);
+                 $('#topicImg').attr('src',imgUrl);
+                 $('#fansPeople').text(subscribe);
+             }
+         })
+     }
     componentDidMount = () => {
         this.initData();
+        this.initHeader();
     }
     componentWillUnmount = () => {
         this.serverRequest.abort();
+        this.serverRequestHeader.abort();
     }
 
   render() {
       let rows = [];
       let articleList = this.state.articleList;
       for (let item of articleList) {
-          if(item.abstract.image.length==1){//一张图片的情况
-
+          let len = item.abstract.image.length;
+          if(len<=1){//一张图片的情况
+              rows.push(
+                  <OneItem itemData={item}></OneItem>
+              );
           }
-          else if(item.abstract.image.length>=2){//2张及以上图片的情况
+          else if(len>=2){//2张及以上图片的情况
               rows.push(
                   <ThreeItem itemData={item}></ThreeItem>
               );
           }
-          rows.push(
-              <div ><span className='fontColor'>{item.id}</span></div>
-          );
       }
 
     return (
