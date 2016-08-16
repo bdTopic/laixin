@@ -6,7 +6,7 @@ class ThreeItem extends Component {
     render () {
         return (
             <div>
-                <h3>DEMO 2, JSX syntax你好啊a12aaa</h3>
+                <h3>DEMO 2, JSX syntax你好啊a1d2aaa</h3>
                 <ul>
                     {
                         names.map( (name) => {
