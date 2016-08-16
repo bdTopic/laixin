@@ -32,10 +32,32 @@ require('./app.less');
             }
         });
     }
+
+    initHeader=()=>{
+        let url = 'http://just.baidu.com/restapi/public/topicmeta?topicid=2523888542&version=1.0';
+        let setState = this._setState.bind(this);
+        this.serverRequest = $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "jsonp",
+            success : function(data){
+                // console.log(data);
+                var title = data.response_params.topic_list[0].title;
+                var imgUrl = data.response_params.topic_list[0].logo.small;
+                var subscribe = data.response_params.topic_list[0].subscribe + '人关注';
+                $('#topTitle').html(title);
+                $('#topicImg').attr('src',imgUrl);
+                $('#fansPeople').text(subscribe);
+            }
+        })
+    }
+
     componentDidMount = () => {
         this.initData();
+        this.initHeader();
     }
     componentWillUnmount = () => {
+        this.serverRequest.abort();
         this.serverRequest.abort();
     }
 
@@ -77,7 +99,8 @@ require('./app.less');
 
               </div>
           </div>
-          <div>{rows}</div>
+        <Component1></Component1>
+        <ThreeItem></ThreeItem>
       </div>
     )
   }

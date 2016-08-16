@@ -6,13 +6,24 @@ class Component1 extends Component {
 
     render() {
         return (
-            <div>
-                <h3 className='testH1'>DEMO 7, state</h3>
-                <h3 className='testH1'>DEMO 1, render() and life cycle</h3>
-                <p>Hello World.</p>
-                <hr/>
-            </div>
-        )
+            <li className="cnt-list">
+                 <a href="" className="typeNews">
+                    <div className="img">
+                        <img src="test.png" alt=""/>
+                    </div>
+                    <div className="text">
+                        <h2>
+                            茶艺表演 红茶 绿茶
+                        </h2>
+                    </div>
+                     <div className="text-extra">
+                         <div className="pv">111阅读</div>
+                         <div className="comment">0评论</div>
+                        <div className="time">06-20 12:01</div>
+                    </div>
+                  </a>
+             </li>
+    )
     }
 }
 

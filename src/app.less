@@ -1,123 +1,182 @@
+html,
+body {
+  background: #f8f8f8;
+}
+
+[data-href] {
+  cursor: pointer;
+}
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
 .list-head {
-    background: #fff;
-    padding: 15px 18px 13px;
-    position: relative;
-    text-align: center;
+  background: #fff;
+  padding: 15px 18px 13px;
+  position: relative;
+  text-align: center;
 }
 .pageHeader{
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    font-size: 100%;
-    vertical-align: baseline;
-    background: transparent;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+
 }
 .topicImg {
-    margin-top: 10px;
-    position: relative;
-    top:20px;
+  margin-top: 10px;
+  position: relative;
+  top:20px;
 
 }
 .imgbg {
-    width: 50px;
-    height: 50px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
-    margin: auto;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  margin: auto;
 }
 .imgbg:after {
-    border-radius: 50%;
-    border: 1px solid #eaeaea;
+  border-radius: 50%;
+  border: 1px solid #eaeaea;
 }
 .msg {
-    overflow: hidden;
+  overflow: hidden;
 }
 .fontheader {
-    margin: 10px 0 9px;
+  margin: 10px 0 9px;
 }
 .fontheader:before {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 .fontheader:after {
-    clear: both;
+  clear: both;
 }
 .title {
-    font-size: 19px;
+  font-size: 19px;
 }
 .description {
-    color: #999;
-    font-size: 12px;
-    line-height: 13px;
-    margin: 9px 0 0;
-    text-align: center;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  color: #999;
+  font-size: 12px;
+  line-height: 13px;
+  margin: 9px 0 0;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .normal:before {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 .normal {
-    height: 30px;
-    width: 65px;
-    cursor: pointer;
-    font-size: 15px;
-    line-height: 30px;
-    text-align: center;
-    position: relative;
+  height: 30px;
+  width: 65px;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
 }
 .normal:after {
-    border-radius: 8px;
-    line-height: 52px;
-    text-align: center;
-    font-size: 28px;
+  border-radius: 8px;
+  line-height: 52px;
+  text-align: center;
+  font-size: 28px;
 }
 .follow {
-    float:left;
-    display: block;
-    color: #3c76ff;
+  float:left;
+  display: block;
+  color: #3c76ff;
 }
 .follow:after {
-    border: 1px solid #3c76ff;
-    color: #3c76ff;
+  border: 1px solid #3c76ff;
+  color: #3c76ff;
 }
 .trblBor {
 
 }
 .trblBor:after {
-    -webkit-transform: scale(0.5);
-    -ms-transform: scale(0.5);
-    -o-transform: scale(0.5);
-    transform: scale(0.5);
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #3c76ff;
+  -webkit-transform: scale(0.5);
+  -ms-transform: scale(0.5);
+  -o-transform: scale(0.5);
+  transform: scale(0.5);
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #3c76ff;
 }
 .operation {
-    margin: 10px auto 0;
-    width: 68px;
+  margin: 10px auto 0;
+  width: 68px;
 }
 .operation:after {
-    content: " ";
-    display: table;
-    clear: both;
+  content: " ";
+  display: table;
+  clear: both;
 }
 .follow:after {
-    border: 1px solid #3c76ff;
-    color: #3c76ff;
+  border: 1px solid #3c76ff;
+  color: #3c76ff;
 }
 .fansNum {
-    position: relative;
-    top: 30px;
+  position: relative;
+  top: 30px;
+}
+.pageitem {
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #ffffff;
+}
+.pagelist {
+  padding: 10px;
+  background: #eeeeee;
+}
+#topicImg {
+  width: 100%;
+  height: 100%;
+}
+
+/*弹性布局容器——图片容器*/
+.imgContainer{
+
+}
+/*弹性布局元素: 一行图片——3张*/
+.imgRow {
+  display: flex;
+
+}
+
+.imgItem{
+  flex-basis: 33.33%;
+  margin: 2px;
+  height: 90px;
+  width: 90px;
+}
+.downloadApp {
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  background: #eee;
+  opacity: 0.5;
+  font-weight: bold;
 }
