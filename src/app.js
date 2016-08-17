@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import ThreeItem from './component/itemThree/threeItem'
-import OneItem from './component/itemOne/oneItem'
+import React, { Component } from 'react';
+import ThreeItem from './component/itemThree/threeItem';
+import OneItem from './component/itemOne/oneItem';
 import $ from 'jquery';
+import {transferDate} from './util/util'
 require('./app.less');
 
  class App extends Component {

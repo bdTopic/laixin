@@ -1,9 +1,110 @@
+html,
+body {
+  background: #f8f8f8;
+}
+
+[data-href] {
+  cursor: pointer;
+}
+body,ol,ul,h1,h2,h3,h4,h5,h6,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select{margin:0;padding:0}
+body{font:12px"宋体","Arial Narrow",HELVETICA;background:#fff;-webkit-text-size-adjust:100%;}
+a{color:#2d374b;text-decoration:none}
+a:hover{color:#cd0200;text-decoration:underline}
+em{font-style:normal}
+li{list-style:none}
+img{border:0;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}
+p{word-wrap:break-word}
 .imgRow {
     display: flex;
 }
 .imgItem{
-    flex-basis: 33.33%;
+    flex-basis: 36.33%;
     margin: 2px;
     height: 90px;
-    width: 90px;
+    width: 120px;
+}
+.cnt-list {
+  border-top: 1px solid #eee;
+  padding: 13px 18px;
+  position: relative;
+  z-index: 66;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: row;
+  line-height: 44px;
+  color: #333;
+}
+.typeNews {
+  color: inherit;
+  display: table;
+  text-decoration: none;
+  width: 100%;
+}
+.img {
+  margin: 0 12px 0 0;
+  width: 107px;
+  height: 71px;
+  position: relative;
+}
+.img img {
+  width: 100%;
+  height: 100%;
+}
+.text {
+  display: table-cell;
+  width: 100%;
+  vertical-align: middle;
+}
+.text h2 {
+  font-size: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 25px;
+  margin-bottom: 5px;
+}
+.text-extra {
+  font-size: 12px;
+  line-height: 12px;
+  height: 12px;
+  margin-top: 10px;
+}
+.text-extra:before {
+  content: " ";
+  display: table;
+}
+.comment {
+  font-size: 12px;
+  height: 12px;
+  line-height: 12px;
+  margin-right: 7px;
+  overflow: hidden;
+  float: left;
+  text-align: left;
+}
+.time {
+  height: 11px;
+  margin-right: 7px;
+  overflow: hidden;
+  float: left;
+  text-align: left;
+  min-width: 72px;
+}
+.text-extra:after {
+  clear: both;
+}
+.three-img div img {
+  width: 100%;
+}
+.imgDiv {
+  line-height: 0;
+  -moz-box-flex: 1;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  width: 33%;
+  margin: 0 1.5px 0 0;
+  flex-direction: row;
 }
