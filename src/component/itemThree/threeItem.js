@@ -11,9 +11,9 @@ class ThreeItem extends Component {
 
         for(let i=0;i<len&&i<3;i++ ) {
             rows.push(
-
-                    <img src = {imageSrc[i]} className="imgItem"/>
-
+                <div className="imgItem" key={itemData.id+'img'+i}>
+                    <img src = {imageSrc[i]}/>
+                </div>
             );
         }
 
@@ -22,11 +22,11 @@ class ThreeItem extends Component {
                 <a href="" className="typeNews">
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
-                        <div className="three-img">
+                        <div className="threeImg">
                             {rows}
                         </div>
                         <div className="text-extra">
-                            <div className="comment">0评论</div>
+                            <div className="comment">{itemData.source}</div>
                             <div className="time">{transferDate(itemData.time)}</div>
                         </div>
                     </div>

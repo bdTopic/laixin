@@ -160,10 +160,12 @@ p{word-wrap:break-word}
 }
 
 .imgItem{
-  flex-basis: 35.33%;
-  margin: 2px;
-  height: 90px;
-  width: 106px;
+  line-height: 0;
+  -moz-box-flex: 1;
+  -webkit-box-flex: 1;
+  box-flex: 1;
+  width: 33%;
+  margin: 0 1.5px 0 0;
 }
 .downloadApp {
     position: fixed;
@@ -175,4 +177,7 @@ p{word-wrap:break-word}
     background: #eee;
     opacity: 0.5;
     font-weight: bold;
+}
+.content {
+  background:#eee ;
 }

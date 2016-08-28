@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {transferDate} from '../../util/util'
-require('./oneItem.less');
+require('./newOne.less');
 
 class OneItem extends Component {
 
@@ -9,11 +9,9 @@ class OneItem extends Component {
         return (
             <li className="cnt-list">
                 <a href="" className="typeNews">
-                    <div className="img">
-                        <img src = {itemData.abstract.image[0]} className="imgItem"/>
-                    </div>
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
+                        <img src = {itemData.abstract.image[0]} className="threeImg"/>
                         <div className="text-extra">
                             <div className="comment">{itemData.source}</div>
                             <div className="time">{transferDate(itemData.time)}</div>
