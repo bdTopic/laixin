@@ -1,20 +1,18 @@
 import React, { Component } from 'react'
-import {transferDate} from '../../util/util'
+import {transferDate} from '../../util/util';
+import Gallery from '../gallery/gallery';
+
 require('./threeItem.less');
 
 class ThreeItem extends Component {
     render () {
         let itemData = this.props.itemData;
-        let rows = [];
         let imageSrc = itemData.abstract.image;
         let len=imageSrc.length;
-
+        let galleryImgs=[];
         for(let i=0;i<len&&i<3;i++ ) {
-            rows.push(
-                <div className="imgItem" key={itemData.id+'img'+i}>
-                    <img src = {imageSrc[i]}/>
-                </div>
-            );
+            let img = {src: imageSrc[i]};
+            galleryImgs.push(img);
         }
 
         return (
@@ -23,7 +21,7 @@ class ThreeItem extends Component {
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
                         <div className="threeImg">
-                            {rows}
+                            <Gallery images={galleryImgs} userStyle="threeImg"></Gallery>
                         </div>
                         <div className="text-extra">
                             <div className="comment">{itemData.source}</div>
