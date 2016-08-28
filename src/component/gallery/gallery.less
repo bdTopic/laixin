@@ -1,0 +1,63 @@
+.gallery{
+  padding-right: 2px;
+  overflow: hidden;
+
+@media (min-width: 500px) {
+  padding-right: 4px;
+ }
+}
+
+// anchor
+.thumbnail{
+  box-sizing: border-box;
+  display: block;
+  float: left;
+  line-height: 0;
+  padding-right: 2px;
+  padding-bottom: 2px;
+  overflow: hidden;
+
+@media (min-width: 500px) {
+  padding-right: 4px;
+  padding-bottom: 4px;
+}
+}
+
+// orientation
+.landscape{
+  width: 30%;
+}
+.square{
+  padding-bottom: 0;
+  width: 40%;
+
+@media (min-width: 500px){
+  padding-bottom: 0;
+}
+}
+
+// actual <img />
+source{
+  border: 0;
+  display: block;
+  height: auto;
+  max-width: 100%;
+  width: auto;
+}
+
+.threeImg {
+  max-width: 100%;
+  display: -moz-box;
+  display: -webkit-box;
+  display: box;
+  flex-direction: row;
+  margin: 6px 0 10px;
+  overflow: hidden;
+}
+
+.imgItem{
+  flex-basis: 36.33%;
+  margin: 2px;
+  height: 90px;
+  width: 120px;
+}

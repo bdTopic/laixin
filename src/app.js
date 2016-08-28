@@ -24,7 +24,9 @@ class App extends Component {
         if(articleList&&articleList.length>0) {
             let preArticleList = this.state.articleList;
             let maxIndex = this.state.maxIndex;
-            for (let item of articleList) {
+            let len = articleList.length;
+            for (let i = 0; i <len; i++) {
+                let item = articleList[i];
                 maxIndex = item.index;
                 preArticleList.push(item);
             }
