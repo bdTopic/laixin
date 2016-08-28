@@ -10,8 +10,10 @@ import Header from './subComponent/Header';
 import PaginatedThumbnails from './subComponent/PaginatedThumbnails';
 import Portal from './subComponent/Portal';
 import ScrollLock from './subComponent/ScrollLock';
-
+var Hammer = require('../hammer/hammer');
 import { bindFunctions, canUseDom } from './utils';
+
+
 
 class Lightbox extends Component {
 	constructor () {
@@ -21,6 +23,7 @@ class Lightbox extends Component {
 			'gotoNext',
 			'gotoPrev',
 			'handleKeyboardInput',
+			'clickImage'
 		]);
 	}
 	getChildContext () {
@@ -101,6 +104,13 @@ class Lightbox extends Component {
 		}
 		this.props.onClickPrev();
 
+	}
+	clickImage (event) {
+		if (event) {
+			event.preventDefault();
+			event.stopPropagation();
+		}
+		this.props.onClickImage();
 	}
 	handleKeyboardInput (event) {
 		if (event.keyCode === 37) {
@@ -188,6 +198,10 @@ class Lightbox extends Component {
 			</Container>
 		);
 	}
+	handleSwipe (event) {
+		// alert(JSON.stringify(event));
+		alert('swipe..');
+	}
 	renderImages () {
 		const {
 			currentImage,
@@ -209,17 +223,20 @@ class Lightbox extends Component {
 			srcset = image.srcset.join();
 			sizes = '100vw';
 		}
-
-		const thumbnailsSize = showThumbnails ? theme.thumbnail.size : 0;
-		const heightOffset = `${theme.header.height + theme.footer.height + thumbnailsSize + (theme.container.gutter.vertical)}px`;
-		let hammerOptions = {
+		const  hammerOptions = {
 			touchAction:'compute',
 			recognizers: {
 				tap: {
 					time: 600,
 					threshold: 100
+				},
+				swipe: {
+					velocity: 0.3,
+					threshold: 100
 				}
 			}};
+		const thumbnailsSize = showThumbnails ? theme.thumbnail.size : 0;
+		const heightOffset = `${theme.header.height + theme.footer.height + thumbnailsSize + (theme.container.gutter.vertical)}px`;
 		return (
 			<figure className={css(classes.figure)}>
 				{/*
@@ -227,17 +244,19 @@ class Lightbox extends Component {
 					https://fb.me/react-unknown-prop is resolved
 					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
 				*/}
-				<img
-					className={css(classes.image)}
-					onClick={!!onClickImage && onClickImage}
-					sizes={sizes}
-					src={image.src}
-					srcSet={srcset}
-					style={{
-						cursor: this.props.onClickImage ? 'pointer' : 'auto',
-						maxHeight: `calc(100vh - ${heightOffset})`,
-					}}
-				/>
+				<Hammer onSwipe={this.handleSwipe}>
+					<img
+						className={css(classes.image)}
+						onClick={this.clickImage}
+						sizes={sizes}
+						src={image.src}
+						srcSet={srcset}
+						style={{
+							cursor: this.props.onClickImage ? 'pointer' : 'auto',
+							maxHeight: `calc(100vh - ${heightOffset})`,
+						}}
+					/>
+				</Hammer>
 				<Footer
 					caption={images[currentImage].caption}
 					countCurrent={currentImage + 1}

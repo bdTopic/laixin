@@ -47,9 +47,9 @@ class App extends Component {
     }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     initData=()=>{
-        let url =  'http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
-        console.log(query.topicid);
-        url+=query.topicid;
+        let url =  'http://just.baidu.com/restapi/public/articlelist?version=1.0&topicid=2523888542';
+        // let url =  'http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
+        // url+=query.topicid;
         let setState = this._setState.bind(this);
         if(this.state.maxIndex!=='-1') {
             url += '&index=' + this.state.maxIndex;
@@ -71,8 +71,9 @@ class App extends Component {
         });
     }
     initHeader=()=>{
-        let url = 'http://just.baidu.com/restapi/public/topicmeta?version=1.0&topicid=';
-        url+=query.topicid;
+        let url = 'http://just.baidu.com/restapi/public/topicmeta?topicid=2523888542&version=1.0';
+        // let url = 'http://just.baidu.com/restapi/public/topicmeta?version=1.0&topicid=';
+        // url+=query.topicid;
         let setInfo = this._setInfo.bind(this);
         this.serverRequestHeader = $.ajax({
             type: "GET",
