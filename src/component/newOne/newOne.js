@@ -10,7 +10,7 @@ class OneItem extends Component {
             <li className="cnt-list">
                 <a href="" className="typeNews">
                     <div className="text">
-                        <h2>{itemData.abstract.text}</h2>
+                        <h2>{itemData.abstract.text}123</h2>
                         <img src = {itemData.abstract.image[0]} className="threeImg"/>
                         <div className="text-extra">
                             <div className="comment">{itemData.source}</div>
