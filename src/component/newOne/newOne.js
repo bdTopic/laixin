@@ -16,7 +16,6 @@ class OneItem extends Component {
             imgS.src = itemData.abstract.image[0];
             imgSrc.push(imgS);
         }
-        console.log(imgSrc);
         return (
             <li className="cnt-list">
                 <a href="" className="typeNews">
