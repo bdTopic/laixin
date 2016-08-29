@@ -23,7 +23,8 @@ class Lightbox extends Component {
 			'gotoNext',
 			'gotoPrev',
 			'handleKeyboardInput',
-			'clickImage'
+			'clickImage',
+			'handleSwipe'
 		]);
 	}
 	getChildContext () {
@@ -104,6 +105,21 @@ class Lightbox extends Component {
 		}
 		this.props.onClickPrev();
 
+	}
+	handleSwipe (event) {
+		console.log(event);
+		if(event.direction === 2){
+				console.log('gotoNext');
+				if (this.props.currentImage !== (this.props.images.length - 1)){
+					this.props.onClickNext();
+				}
+		}if(event.direction === 4){
+				console.log('gotoPrev');
+				if (this.props.currentImage !== 0) {
+					this.props.onClickPrev();
+				}
+		}
+		// alert('swipe..'+event.direction);
 	}
 	clickImage (event) {
 		if (event) {
@@ -198,10 +214,7 @@ class Lightbox extends Component {
 			</Container>
 		);
 	}
-	handleSwipe (event) {
-		// alert(JSON.stringify(event));
-		alert('swipe..');
-	}
+
 	renderImages () {
 		const {
 			currentImage,
@@ -226,13 +239,9 @@ class Lightbox extends Component {
 		const  hammerOptions = {
 			touchAction:'compute',
 			recognizers: {
-				tap: {
-					time: 600,
-					threshold: 100
-				},
 				swipe: {
 					velocity: 0.3,
-					threshold: 100
+					threshold: 10
 				}
 			}};
 		const thumbnailsSize = showThumbnails ? theme.thumbnail.size : 0;
@@ -244,7 +253,7 @@ class Lightbox extends Component {
 					https://fb.me/react-unknown-prop is resolved
 					<Swipeable onSwipedLeft={this.gotoNext} onSwipedRight={this.gotoPrev} />
 				*/}
-				<Hammer onSwipe={this.handleSwipe}>
+				<Hammer onSwipe={this.handleSwipe} options={hammerOptions}>
 					<img
 						className={css(classes.image)}
 						onClick={this.clickImage}
