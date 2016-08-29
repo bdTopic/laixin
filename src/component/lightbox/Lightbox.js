@@ -107,14 +107,11 @@ class Lightbox extends Component {
 
 	}
 	handleSwipe (event) {
-		console.log(event);
-		if(event.direction === 2){
-				console.log('gotoNext');
+		if(event.direction === 2){//DIRECTION_LEFT
 				if (this.props.currentImage !== (this.props.images.length - 1)){
 					this.props.onClickNext();
 				}
-		}if(event.direction === 4){
-				console.log('gotoPrev');
+		}if(event.direction === 4){//DIRECTION_RIGHT
 				if (this.props.currentImage !== 0) {
 					this.props.onClickPrev();
 				}
