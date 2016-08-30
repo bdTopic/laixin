@@ -8,19 +8,26 @@ class OneItem extends Component {
 
     render() {
         let itemData = this.props.itemData;
-        var imgUrl = itemData.abstract.image[0];
+        let imgSrc = [];
+        if(itemData.abstract.image[0]){
+            let imgS = {
+                src:''
+            };
+            imgS.src = itemData.abstract.image[0];
+            imgSrc.push(imgS);
+        }
         return (
             <li className="cnt-list">
-                <div className="typeNews">
+                <a href="" className="typeNews">
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
-                        <img src = {imgUrl} className="threeImg"  data-box="imageViewer" data-box-viewerurl={imgUrl}/>
+                        <Gallery images={imgSrc} userStyle="threeImg"></Gallery>
                         <div className="text-extra">
                             <div className="comment">{itemData.source}</div>
                             <div className="time">{transferDate(itemData.time)}</div>
                         </div>
                     </div>
-                </div>
+                </a>
             </li>
 
         )

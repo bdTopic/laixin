@@ -117,7 +117,7 @@ class App extends Component {
         let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=sbox&third_id=6000&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
-        let optType = this.state.foucebool
+        let optType = this.state.foucebool;
         url += optType;
         console.log(url);
         this.serverRequestHeader = $.ajax({
@@ -176,6 +176,10 @@ class App extends Component {
         this.getfouusStatus();
         this.bindScrollListener();
 
+    }
+    componentDidUpdate = () => {
+       // console.log(document.querySelectorAll('img'))
+        window.BoxJS.updateImageViewer();
     }
     componentWillUnmount = () => {
         this.serverRequest.abort();
