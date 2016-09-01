@@ -4,6 +4,7 @@ import OneItem from './component/itemOne/oneItem';
 import NewOne from './component/newOne/newOne';
 import $ from 'jquery';
 import {getBrowserInfo} from './util/util';
+import {clickHtml} from './util/util';
 require('./app.less');
 
 let query ={};
@@ -17,7 +18,8 @@ class App extends Component {
             description:'',
             fouceStauts:'',
             maxIndex:'-1',
-            foucebool:''
+            foucebool:'',
+            tipsContent:''
         };
     }
     _setState=(articleList)=>{
@@ -40,13 +42,25 @@ class App extends Component {
         this.setState({title:title,imgUrl:imgUrl,description:description});
     }
     _setStatus=()=>{
-        this.setState({fouceStauts:'已关注',foucebool:'cancel'})
+        this.setState({fouceStauts:'已关注',foucebool:'cancel',tipsContent:'关注成功,在"我的关注"中可查看'})
     }
     _setStatusHavent=()=>{
-        this.setState({fouceStauts:'关注',foucebool:'add'})
+        this.setState({fouceStauts:'关注',foucebool:'add',tipsContent:'已取消关注'})
+    }
+
+    htmClick=()=>{
+        let _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?20894e1cb6050fe94b58b57981cdee86";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+
     }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     initData=()=>{
+        clickHtml();
         let url =  'http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
         console.log(query.topicid);
         url+=query.topicid;
@@ -54,14 +68,11 @@ class App extends Component {
         if(this.state.maxIndex!=='-1') {
             url += '&index=' + this.state.maxIndex;
         }
-        console.log(url);
         this.serverRequest = $.ajax({
             type: "GET",
             url: url,
             dataType: "jsonp",
             success : function(data){
-                console.log('data');
-                console.log(data);
                 setState(data.response_params.article_list);
             },
             error:  function(data){
@@ -102,41 +113,75 @@ class App extends Component {
                 JSON.stringify(data);
                 if(data.data.items.length > 0){
                     setStatus();
-                    console.log('已关注');
                 }
                 else {
                     setStatusHavent();
-                    console.log('未关注');
                 }
 
             }
         })
     }
 
+    _showTips = ()=>{
+        console.log('22222212312312');
+        let toastHtml = '<div class="mth-follow-toast mth-toast-follow"></div>';
+        $('body').append(toastHtml);
+        console.log('12312312');
+        let toastContent = this._toastContent.bind(this);
+        toastContent();
+    }
+    _toastContent = ()=>{
+        let msg = this.state.tipsContent;
+        console.log(msg+"12e1231321");
+        let $toast = $('.mth-toast-follow');
+        $toast.text(msg);
+
+        // let tempWidth = parseInt($toast.css('width'), 10);
+        let tempWidth = parseInt($toast[0].offsetWidth, 10);
+        console.log($toast.css('width'), -1);
+        let tempPadding = parseInt($toast.css('padding-left'), 10) * 2; // 左右边距
+        tempWidth += tempPadding;
+        let windowHeight = parseInt(window.innerHeight, 10);
+        let windowWidth = parseInt(window.innerWidth, 10);
+        let leftTemp = (windowWidth - tempWidth) / 2;
+        console.log(tempPadding, 0);
+        console.log(tempWidth, '1');
+        console.log(windowWidth, 2)
+        $toast.css('left', leftTemp);
+        //显示隐藏
+        $toast.addClass('mth-toast-show');
+       setTimeout(function () {
+            $toast.removeClass('mth-toast-show');
+        }, 1888);
+    }
+
     focusTopic=()=>{
+        let _hmt = _hmt || [];
+        clickHtml();
         let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=sbox&third_id=6000&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         let optType = this.state.foucebool;
+        let showTips = this._showTips.bind(this);
         url += optType;
-        console.log(url);
         this.serverRequestHeader = $.ajax({
             type: "GET",
             url: url,
             dataType: "jsonp",
             success : function(data){
-                console.log(data);
-                //JSON.stringify(data);
-                console.log(url);
                 if(data.errno === 0){
                     // console.log(this.state.foucebool);
                     if(optType == 'add'){
-                        console.log('add');
-                        setStatus()
+                        console.log('1231');
+                        _hmt.push(['_trackEvent', '点击关注', 'click']);
+                        setStatus();
+                        showTips();
+                        console.log('11');
                     }
                     else if(optType == 'cancel'){
-                        console.log('cancel');
+                        _hmt.push(['_trackEvent', '取消关注', 'click']);
                         setStatusHavent();
+                        showTips();
                     }
                 }
                 else {
@@ -179,7 +224,7 @@ class App extends Component {
     }
     componentDidUpdate = () => {
        // console.log(document.querySelectorAll('img'))
-        window.BoxJS.updateImageViewer();
+       // window.BoxJS.updateImageViewer();
     }
     componentWillUnmount = () => {
         this.serverRequest.abort();
@@ -192,6 +237,7 @@ class App extends Component {
         let imgUrl = this.state.imgUrl;
         let description = this.state.description;
         let fouceStauts = this.state.fouceStauts;
+        let tipsContent = this.state.tipsContent;
         let rows = articleList.map(function (item) {
             let len = item.abstract.image.length;
             if (len <= 1) {//一张图片的情况
@@ -207,23 +253,24 @@ class App extends Component {
         });
         return (
             <div>
-                <div className="list-head">
-                    <div className="pageHeader">
-                        <div className="imgbg">
-                            <img src={imgUrl} id="topicImg"/>
-                        </div>
-                        <div className="msg">
-                            <div className="fontheader">
+                <div className="mth-author">
+                    <div className="mth-author-head">
+                        <div className="author-info">
+                            <div className="author">
+                                <img src={imgUrl} id="topicImg"/>
+                            </div>
+                            <div className="headerMsg">
                                 <h1 className="title" id="topTitle">{title}</h1>
+                                <div className="author-data">
+                                    <span className="description" id="fansPeople">{description}</span>
+                                </div>
                             </div>
-                            <span className="description" id="fansPeople">{description}</span>
-                        </div>
-                        <div className="operation">
-                            <div className="normal follow trblBor" onClick={this.focusTopic}>
-                                {fouceStauts}
+                            <div className="HeaderOperation">
+                                <div className="normal follow trblBor" onClick={this.focusTopic}>
+                                    {fouceStauts}
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div className="content">{rows}</div>

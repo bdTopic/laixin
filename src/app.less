@@ -69,11 +69,11 @@ p{word-wrap:break-word}
     color: #999;
     font-size: 12px;
     line-height: 13px;
-    margin: 9px 0 0;
-    text-align: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    margin-top: 10px;
+    display: block;
 }
 .normal:before {
     content: " ";
@@ -180,4 +180,113 @@ p{word-wrap:break-word}
 }
 .content {
   background:#eee ;
+}
+/*头部改版*/
+.mth-author {
+  background: #fff;
+  padding: 30px 18px;
+  margin-bottom: 10px;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  position: relative;
+}
+.author-info {
+  display: flex;
+}
+.author {
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
+.headerMsg {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 0 8px;
+  overflow: hidden;
+}
+.author-data {
+  color: #999;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.HeaderOperation {
+  width: 68px;
+  margin-top: 10px;
+}
+.HeaderOperation:before{
+  content: '';
+  display: table;
+}
+.HeaderOperation:after{
+  content: '';
+  display: table;
+}
+.tips {
+  filter:alpha(opacity=50);
+  -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+  background: #000;
+  color: #fff;
+  position: fixed;
+  bottom: 20px;
+  left: 20%;
+  z-index: 999;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+}
+
+.mth-follow-toast {
+  opacity: 0;
+  line-height: 1.5;
+  position:fixed;
+  top: 50%;
+  // left: 50%;
+  // -webkit-transform: translate(-50%, -50%);
+  //     -ms-transform: translate(-50%, -50%);
+  //         transform: translate(-50%, -50%);
+  margin-top: -52px;
+  // padding: 15px 20px;
+  padding: 6px 20px 6px 20px;
+  background-color: rgba(0, 0, 0, .8);
+  border-radius: 4px;
+  color: #fff;
+  text-align: center;
+  z-index: 0;
+  font-size: 16px;
+  transition: .6s;
+  // display: none;
+}
+.mth-follow-toast {
+  opacity: 0;
+  line-height: 1.5;
+  position:fixed;
+  top: 90%;
+  // left: 50%;
+  // -webkit-transform: translate(-50%, -50%);
+  //     -ms-transform: translate(-50%, -50%);
+  //         transform: translate(-50%, -50%);
+  margin-top: -52px;
+  // padding: 15px 20px;
+  padding: 6px 20px 6px 20px;
+  background-color: rgba(0, 0, 0, .8);
+  border-radius: 4px;
+  color: #fff;
+  text-align: center;
+  z-index: 0;
+  font-size: 16px;
+  transition: .6s;
+  // display: none;
+}
+.mth-toast-show {
+  transition: 0s;
+  opacity: 1;
+  z-index: 99;
 }

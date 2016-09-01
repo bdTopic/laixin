@@ -34,6 +34,15 @@ const getBrowserInfo = () =>{
         language:(navigator.browserLanguage || navigator.language).toLowerCase()
     }
 }
+const clickHtml = ()=>{
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?20894e1cb6050fe94b58b57981cdee86";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 
+    // return _hmt;
+}
 
-export {transferDate,getBrowserInfo};
+export {transferDate,getBrowserInfo,clickHtml};
