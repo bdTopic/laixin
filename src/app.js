@@ -102,7 +102,8 @@ class App extends Component {
         })
     }
     getfouusStatus = ()=>{
-        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/get?type=card&sfrom=sbox&third_id=6000';
+        let buttonColor = this._buttonColor.bind(this);
+        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         this.serverRequestHeader = $.ajax({
@@ -113,13 +114,27 @@ class App extends Component {
                 JSON.stringify(data);
                 if(data.data.items.length > 0){
                     setStatus();
+                    buttonColor();
                 }
                 else {
                     setStatusHavent();
+                    buttonColor();
                 }
 
             }
         })
+    }
+    _buttonColor = ()=>{
+        let buttonMsg = this.state.fouceStauts;
+        if(buttonMsg=='已关注'){
+            console.log('asdf已经');
+            $('#buttonCSS').removeClass('follow');
+            $('#buttonCSS').addClass('cssafer');
+        }
+        else if(buttonMsg=='关注'){
+            $('#buttonCSS').removeClass('cssafer');
+            $('#buttonCSS').addClass('follow');
+        }
     }
 
     _showTips = ()=>{
@@ -156,9 +171,10 @@ class App extends Component {
     }
 
     focusTopic=()=>{
+        let buttonColor = this._buttonColor.bind(this);
         let _hmt = _hmt || [];
         clickHtml();
-        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=sbox&third_id=6000&op_type=';
+        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         let optType = this.state.foucebool;
@@ -176,12 +192,14 @@ class App extends Component {
                         _hmt.push(['_trackEvent', '点击关注', 'click']);
                         setStatus();
                         showTips();
+                        buttonColor();
                         console.log('11');
                     }
                     else if(optType == 'cancel'){
                         _hmt.push(['_trackEvent', '取消关注', 'click']);
                         setStatusHavent();
                         showTips();
+                        buttonColor();
                     }
                 }
                 else {
@@ -266,7 +284,7 @@ class App extends Component {
                                 </div>
                             </div>
                             <div className="HeaderOperation">
-                                <div className="normal follow trblBor" onClick={this.focusTopic}>
+                                <div className="normal trblBor" onClick={this.focusTopic} id="buttonCSS">
                                     {fouceStauts}
                                 </div>
                             </div>

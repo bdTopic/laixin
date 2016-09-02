@@ -9,19 +9,17 @@ class ThreeItem extends Component {
     change=(id)=>{
         let _hmt = _hmt || [];
         clickHtml();
-        var val = $('#img'+id).attr('class');
-        var bool = val.indexOf('threeImg');
+        var val = $(id).attr('class');
+        var bool = val.indexOf('imgItem');
         console.log(bool);
-        if(val.indexOf('threeImg')>=0){
+        if(val.indexOf('imgItem')>=0){
             console.log(id);
             _hmt.push(['_trackEvent', '点击查看文章', 'click']);
-            $('#img'+id).removeClass('threeImg');
-            $('#img'+id).addClass('newPhoto');
+
         }
         else {
             console.log('none');
-            $('#img'+id).removeClass('newPhoto');
-            $('#img'+id).addClass('threeImg');
+            _hmt.push(['_trackEvent', '点击查看文章', 'click']);
         }
 
     }
@@ -36,19 +34,18 @@ class ThreeItem extends Component {
         let len=imageSrc.length;
         let rows = [];
         let urlFormate = [];
-        console.log(itemData);
         for(let i=0;i<len&&i<3;i++ ) {
             urlFormate[i] = this.urlFormate(imageSrc[i]);
             rows.push(
-                <div className="imgItem" key={itemData.id+'img'+i}>
-                    <img src = {urlFormate[i]} onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}/>
+                <div className="imgItem" key={itemData.id+'img'+i}  onClick={this.change.bind(this, "#img"+i+"_"+itemData.id)} id={"img"+i+"_"+itemData.id}>
+                    <img src = {urlFormate[i]} />
                 </div>
             );
         }
 
         return (
             <div className="cnt-list">
-                <a href="" className="typeNews">
+                <div href="" className="typeNews">
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
                         <div className="threeImg">
@@ -59,7 +56,7 @@ class ThreeItem extends Component {
                             <div className="time">{transferDate(itemData.time)}</div>
                         </div>
                     </div>
-                </a>
+                </div>
             </div>
         )
     }
