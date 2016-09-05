@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import {transferDate} from '../../util/util';
-import Gallery from '../gallery/gallery';
-import {clickHtml} from '../../util/util';
+import $ from 'jquery';
 
 require('./threeItem.less');
 
 class ThreeItem extends Component {
     change=(id)=>{
-        let _hmt = _hmt || [];
-        clickHtml();
         var val = $(id).attr('class');
         var bool = val.indexOf('imgItem');
         console.log(bool);

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {transferDate} from '../../util/util';
-import Gallery from '../gallery/gallery';
 import $ from 'jquery';
-import {clickHtml} from '../../util/util';
 require('./newOne.less');
 
 class OneItem extends Component {
@@ -14,13 +12,11 @@ class OneItem extends Component {
     }
     change=(id)=>{
         let scroll= this.scroll.bind(this);
-        let _hmt = _hmt || [];
-        clickHtml();
+        // console.error(_hmt);
+        // console.error(window);
         var val = $('#img'+id).attr('class');
         var bool = val.indexOf('threeImg');
-        console.log(bool);
         if(val.indexOf('threeImg')>=0){
-            console.log(id);
             _hmt.push(['_trackEvent', '点击查看文章', 'click']);
             $('#img'+id).removeClass('threeImg');
             $('#img'+id).addClass('newPhoto');

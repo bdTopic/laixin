@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import ThreeItem from './component/itemThree/threeItem';
-import OneItem from './component/itemOne/oneItem';
 import NewOne from './component/newOne/newOne';
 import $ from 'jquery';
-import {getBrowserInfo} from './util/util';
-import {clickHtml} from './util/util';
 require('./app.less');
 
 let query ={};
@@ -48,19 +45,8 @@ class App extends Component {
         this.setState({fouceStauts:'关注',foucebool:'add',tipsContent:'已取消关注'})
     }
 
-    htmClick=()=>{
-        let _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?20894e1cb6050fe94b58b57981cdee86";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-        })();
-
-    }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     initData=()=>{
-        clickHtml();
         let url =  'http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
         console.log(query.topicid);
         url+=query.topicid;
@@ -172,8 +158,6 @@ class App extends Component {
 
     focusTopic=()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let _hmt = _hmt || [];
-        clickHtml();
         let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
