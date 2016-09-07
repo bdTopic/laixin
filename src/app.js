@@ -47,7 +47,7 @@ class App extends Component {
 
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     initData=()=>{
-        let url =  'http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
+        let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
         console.log(query.topicid);
         url+=query.topicid;
         let setState = this._setState.bind(this);
@@ -89,7 +89,7 @@ class App extends Component {
     }
     getfouusStatus = ()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail';
+        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         this.serverRequestHeader = $.ajax({
@@ -158,7 +158,7 @@ class App extends Component {
 
     focusTopic=()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let url = 'http://cq01-duwei04.epc.baidu.com:8220/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&op_type=';
+        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         let optType = this.state.foucebool;

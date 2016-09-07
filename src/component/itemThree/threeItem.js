@@ -45,7 +45,7 @@ class ThreeItem extends Component {
                 <div href="" className="typeNews">
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
-                        <div className="threeImg">
+                        <div className="threeImgs">
                             {rows}
                         </div>
                         <div className="text-extra">

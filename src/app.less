@@ -20,6 +20,18 @@ li{list-style:none}
 img{border:0;vertical-align:middle}
 table{border-collapse:collapse;border-spacing:0}
 p{word-wrap:break-word}
+body,
+button,
+input,
+select,
+textarea {
+  font-size: 12px;
+  font-family: "Droid Sans", "Droid Sans Fallback", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+}
+button {
+  border:none;
+  outline: none;
+}
 .list-head {
     background: #fff;
     padding: 15px 18px 13px;
@@ -197,13 +209,16 @@ p{word-wrap:break-word}
 /*头部改版*/
 .mth-author {
   background: #fff;
-  padding: 30px 18px;
-  margin-bottom: 10px;
+  padding: 25px 18px;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   position: relative;
 }
 .author-info {
+  display: -webkit-box;
   display: flex;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
 }
 .author {
   width: 50px;

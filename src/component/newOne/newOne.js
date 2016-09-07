@@ -5,9 +5,20 @@ require('./newOne.less');
 
 class OneItem extends Component {
     scroll=(id)=>{
-        let ele = document.getElementById('a'+id);
+        id = "a" + id;
+        //console.log('id='+id);
+
+        let ele = document.getElementById(id);
+        let scrollHeight = document.getElementById(id).scrollHeight;
+        let clientHeight = ele.clientHeight;
         if(ele){
-            ele.scrollIntoView();
+           // window.location.hash = 'ele';
+           ele.scrollIntoView();
+           // ScrollView.scrollTo(length);
+           //  ele.scrollTo(0,length);
+           /* console.log('clientHeight='+clientHeight);
+            console.log('scrollHeight='+scrollHeight);
+            window.scrollTo(0,scrollHeight - clientHeight);*/
         }
     }
     change=(id)=>{
@@ -29,30 +40,75 @@ class OneItem extends Component {
         }
 
     }
-    urlFormate = (str)=>{
+    _urlFormate = (str)=>{
         let exp = /src=(.+)$/;
         let matchs = str.match(exp);
         return !!matchs ? decodeURIComponent(matchs[1]) : '';
     }
+
+    _changeText=(id)=>{
+        let con = $('#111'+id).text();
+        if (con=='展开'){
+            $('#h2'+id).removeClass('short');
+            $('#111'+id).text('收起');
+        }
+        else if (con == '收起'){
+            $('#h2'+id).addClass('short');
+            $('#111'+id).text('展开');
+        }
+    }
+
+
     render() {
         let itemData = this.props.itemData;
+        let content = itemData.abstract.text;
+        let id =  itemData.id;
+       // console.log(content.length+'aaa'+ id);
         var imgUrl = itemData.abstract.image[0];
-        let urlFormate = this.urlFormate(imgUrl);
-        return (
-            <li className="cnt-list">
-                <div className="typeNews">
-                    <a className="text" id={"a"+itemData.id}>
-                        <h2>{itemData.abstract.text}</h2>
-                        <img src = {urlFormate} className="threeImg"   onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id} />
-                        <div className="text-extra">
-                            <div className="comment">{itemData.source}</div>
-                            <div className="time">{transferDate(itemData.time)}</div>
-                        </div>
-                    </a>
-                </div>
-            </li>
+        let urlFormate = '';
+        if(imgUrl) {
+             urlFormate = this._urlFormate(imgUrl);
+        }
+        if(content.length > 150){
+            return (
+                <li className="cnt-list">
+                    <div className="typeNews">
+                        <a className="text" id={"a"+itemData.id}>
+                            <h2 className="short" id={"h2"+itemData.id}>{itemData.abstract.text}</h2>
+                            <button onClick={this._changeText.bind(this,this.props.itemData.id)} id={'111' + itemData.id} className="buttonS">展开</button>
+                            <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                <img src = {urlFormate}  className="imgSize" />
+                            </div>
+                            <div className="text-extra">
+                                <div className="comment">{itemData.source}</div>
+                                <div className="time">{transferDate(itemData.time)}</div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
 
-        )
+            )
+        }
+        else {
+            return (
+                <li className="cnt-list">
+                    <div className="typeNews">
+                        <a className="text" id={"a"+itemData.id}>
+                            <h2 id={"ConText"+itemData.id}>{itemData.abstract.text}</h2>
+                            <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                <img src = {urlFormate}  className="imgSize" />
+                            </div>
+                            <div className="text-extra">
+                                <div className="comment">{itemData.source}</div>
+                                <div className="time">{transferDate(itemData.time)}</div>
+                            </div>
+                        </a>
+                    </div>
+                </li>
+
+            )
+        }
+
 
     }
 }

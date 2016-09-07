@@ -61,12 +61,18 @@ p{word-wrap:break-word}
 .text h2 {
   font-size: 16px;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  overflow: hidden;
   line-height: 25px;
   margin-bottom: 5px;
+}
+.short {
+  -webkit-line-clamp: 6;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.zopen {
+  display: none;
 }
 .text-extra {
   font-size: 12px;
@@ -99,31 +105,20 @@ p{word-wrap:break-word}
   clear: both;
 }
 .threeImg {
-  max-width: 100%;
-  display: -moz-box;
-  display: -webkit-box;
-  display: box;
-  flex-direction: row;
-  margin: 6px 0 10px;
+  margin: 0px 0 10px;
   overflow: hidden;
-  object-fit: cover;
   width: 100%;
-  max-height: 200px;
-  object-position: 0 0;
+  max-height: 250px;
 }
 .newPhoto {
   max-width: 100%;
-  display: -moz-box;
-  display: -webkit-box;
-  display: box;
-  flex-direction: row;
-  margin: 6px 0 10px;
-  overflow: hidden;
-  object-fit: cover;
+  margin: 0px 0 10px;
   width: 100%;
-  object-position: 0 0;
+  height: auto;
 }
-
+.imgSize {
+  width: 100%;
+}
 .imgDiv {
   line-height: 0;
   -moz-box-flex: 1;
@@ -132,4 +127,8 @@ p{word-wrap:break-word}
   width: 33%;
   margin: 0 1.5px 0 0;
   flex-direction: row;
+}
+.buttonS {
+  background: #ffffff;
+  color:#3c76ff;
 }
