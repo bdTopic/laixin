@@ -3,7 +3,9 @@ import {transferDate} from '../../util/util';
 import $ from 'jquery';
 require('./newOne.less');
 
+let preHeight = -1;
 class OneItem extends Component {
+
     scroll=(id)=>{
         id = "a" + id;
         //console.log('id='+id);
@@ -15,7 +17,7 @@ class OneItem extends Component {
            // window.location.hash = 'ele';
            ele.scrollIntoView();
            // ScrollView.scrollTo(length);
-           //  ele.scrollTo(0,length);
+            ele.scrollTo(0, preHeight);
            /* console.log('clientHeight='+clientHeight);
             console.log('scrollHeight='+scrollHeight);
             window.scrollTo(0,scrollHeight - clientHeight);*/
@@ -31,6 +33,7 @@ class OneItem extends Component {
             _hmt.push(['_trackEvent', '点击查看文章', 'click']);
             $('#img'+id).removeClass('threeImg');
             $('#img'+id).addClass('newPhoto');
+            preHeight = document.getElementById(id).scrollHeight;
         }
         else {
             console.log('none');
