@@ -8,7 +8,10 @@ const transferDate = (timestamp) =>{
     var timeStr = month < 10 ? '0'+ month : month;
     timeStr += '-';
     timeStr += day < 10 ? '0'+ day : day;
-    timeStr += " " +  hour + ":" + minute;
+    timeStr += " ";
+    timeStr +=  hour  < 10 ? '0'+hour : hour;
+    timeStr +=  ":";
+    timeStr += minute < 10 ? '0'+minute : minute;
     return timeStr;
 }
 const getBrowserInfo = () =>{
