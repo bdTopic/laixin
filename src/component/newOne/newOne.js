@@ -11,13 +11,17 @@ class OneItem extends Component {
         //console.log('id='+id);
 
         let ele = document.getElementById(id);
-        let scrollHeight = document.getElementById(id).scrollHeight;
+        //let scrollHeight = document.getElementById(id).scrollHeight;
+        // offsetTop
         let clientHeight = ele.clientHeight;
+       // console.log(scrollHeight+'@@@id');
         if(ele){
            // window.location.hash = 'ele';
-           ele.scrollIntoView();
+           //ele.scrollIntoView();
            // ScrollView.scrollTo(length);
-            ele.scrollTo(0, preHeight);
+            console.log(preHeight+'@@'+id);
+           // window.scrollTo(0, preHeight);
+            document.body.scrollTop = preHeight;
            /* console.log('clientHeight='+clientHeight);
             console.log('scrollHeight='+scrollHeight);
             window.scrollTo(0,scrollHeight - clientHeight);*/
@@ -28,12 +32,14 @@ class OneItem extends Component {
         // console.error(_hmt);
         // console.error(window);
         var val = $('#img'+id).attr('class');
+        let aId = "a"+id;
         var bool = val.indexOf('threeImg');
         if(val.indexOf('threeImg')>=0){
             _hmt.push(['_trackEvent', '点击查看文章', 'click']);
             $('#img'+id).removeClass('threeImg');
             $('#img'+id).addClass('newPhoto');
-            preHeight = document.getElementById(id).scrollHeight;
+            preHeight = document.body.scrollTop;
+            console.log(preHeight+'!!!'+aId);
         }
         else {
             console.log('none');
