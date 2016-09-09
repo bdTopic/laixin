@@ -113,7 +113,6 @@ class App extends Component {
     _buttonColor = ()=>{
         let buttonMsg = this.state.fouceStauts;
         if(buttonMsg=='已关注'){
-            console.log('asdf已经');
             $('#buttonCSS').removeClass('follow');
             $('#buttonCSS').addClass('cssafer');
         }
@@ -124,31 +123,23 @@ class App extends Component {
     }
 
     _showTips = ()=>{
-        console.log('22222212312312');
-        let toastHtml = '<div class="mth-follow-toast mth-toast-follow"></div>';
-        $('body').append(toastHtml);
-        console.log('12312312');
+        let toastHtml = '<span class="mth-follow-toast mth-toast-follow"></span>';
+         if($('.mth-follow-toast').length==0){
+             $('body').append(toastHtml);
+         }
         let toastContent = this._toastContent.bind(this);
         toastContent();
     }
     _toastContent = ()=>{
+
         let msg = this.state.tipsContent;
-        console.log(msg+"12e1231321");
+
         let $toast = $('.mth-toast-follow');
+
         $toast.text(msg);
 
-        // let tempWidth = parseInt($toast.css('width'), 10);
-        let tempWidth = parseInt($toast[0].offsetWidth, 10);
-        console.log($toast.css('width'), -1);
-        let tempPadding = parseInt($toast.css('padding-left'), 10) * 2; // 左右边距
-        tempWidth += tempPadding;
-        let windowHeight = parseInt(window.innerHeight, 10);
-        let windowWidth = parseInt(window.innerWidth, 10);
-        let leftTemp = (windowWidth - tempWidth) / 2;
-        console.log(tempPadding, 0);
-        console.log(tempWidth, '1');
-        console.log(windowWidth, 2)
-        $toast.css('left', leftTemp);
+        var _leftnew = (window.innerWidth - $toast[0].offsetWidth) / 2;
+        $toast.css('left',_leftnew);
         //显示隐藏
         $toast.addClass('mth-toast-show');
        setTimeout(function () {
@@ -172,12 +163,10 @@ class App extends Component {
                 if(data.errno === 0){
                     // console.log(this.state.foucebool);
                     if(optType == 'add'){
-                        console.log('1231');
                         _hmt.push(['_trackEvent', '点击关注', 'click']);
                         setStatus();
                         showTips();
                         buttonColor();
-                        console.log('11');
                     }
                     else if(optType == 'cancel'){
                         _hmt.push(['_trackEvent', '取消关注', 'click']);
