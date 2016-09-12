@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ThreeItem from './component/itemThree/threeItem';
 import NewOne from './component/newOne/newOne';
 import $ from 'jquery';
+
+var Hammer = require('react-hammerjs');
 require('./app.less');
 
 let query ={};
@@ -221,7 +223,10 @@ class App extends Component {
         this.serverRequest.abort();
         this.serverRequestHeader.abort();
     }
+    handleSwipe (event) {
 
+        alert('swipe..'+event.direction);
+    }
     render() {
         let articleList = this.state.articleList;
         let title = this.state.title;
@@ -244,6 +249,9 @@ class App extends Component {
         });
         return (
             <div>
+                <Hammer onTap={this.handleSwipe}>
+                    <img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt=""/>
+                </Hammer>
                 <div className="mth-author">
                     <div className="mth-author-head">
                         <div className="author-info">
@@ -264,6 +272,7 @@ class App extends Component {
                         </div>
                     </div>
                 </div>
+
                 <div className="content">{rows}</div>
             </div>
         )
