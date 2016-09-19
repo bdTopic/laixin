@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import ThreeItem from './component/itemThree/threeItem';
 import NewOne from './component/newOne/newOne';
 import $ from 'jquery';
-
-var Hammer = require('react-hammerjs');
+import ReactPullToRefresh from 'react-pull-to-refresh';
+import {getVersion} from './util/util';
+import {cmpVersion} from './util/util';
 require('./app.less');
 
 let query ={};
+let count = 1;
 class App extends Component {
     constructor(props) {
         super(props);
@@ -21,6 +23,8 @@ class App extends Component {
             tipsContent:''
         };
     }
+
+
     _setState=(articleList)=>{
         if(articleList&&articleList.length>0) {
             let preArticleList = this.state.articleList;
@@ -31,7 +35,6 @@ class App extends Component {
                 maxIndex = item.index;
                 preArticleList.push(item);
             }
-            console.log('maxIndex=' + maxIndex);
             this.setState({maxIndex: maxIndex});
             this.setState({articleList: preArticleList});
         }
@@ -47,10 +50,12 @@ class App extends Component {
         this.setState({fouceStauts:'关注',foucebool:'add',tipsContent:'已取消关注'})
     }
 
+    _setNewVersion=()=>{
+        this.setState({fouceStauts:'已关注',foucebool:'cancel',tipsContent:'关注成功,在"关注"中可查看'})
+    }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     initData=()=>{
         let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
-        console.log(query.topicid);
         url+=query.topicid;
         let setState = this._setState.bind(this);
         if(this.state.maxIndex!=='-1') {
@@ -94,6 +99,7 @@ class App extends Component {
         let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
+
         this.serverRequestHeader = $.ajax({
             type: "GET",
             url: url,
@@ -157,32 +163,69 @@ class App extends Component {
         let optType = this.state.foucebool;
         let showTips = this._showTips.bind(this);
         url += optType;
-        this.serverRequestHeader = $.ajax({
-            type: "GET",
-            url: url,
-            dataType: "jsonp",
-            success : function(data){
-                if(data.errno === 0){
-                    // console.log(this.state.foucebool);
-                    if(optType == 'add'){
-                        _hmt.push(['_trackEvent', '点击关注', 'click']);
-                        setStatus();
-                        showTips();
-                        buttonColor();
-                    }
-                    else if(optType == 'cancel'){
-                        _hmt.push(['_trackEvent', '取消关注', 'click']);
-                        setStatusHavent();
-                        showTips();
-                        buttonColor();
-                    }
-                }
-                else {
-                    console.log('点击没返回成功');
-                }
 
-            }
-        })
+        let setNewVersion = this._setNewVersion.bind(this);
+        //获取版本号:
+        let version = getVersion();
+        let str2 = '7.7.0.0';
+        let result = cmpVersion(version,str2);
+        if(result == -1){
+            this.serverRequestHeader = $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "jsonp",
+                success : function(data){
+                    if(data.errno === 0){
+                        // console.log(this.state.foucebool);
+                        if(optType == 'add'){
+                            _hmt.push(['_trackEvent', '点击关注', 'click']);
+                            setStatus();
+                            showTips();
+                            buttonColor();
+                        }
+                        else if(optType == 'cancel'){
+                            _hmt.push(['_trackEvent', '取消关注', 'click']);
+                            setStatusHavent();
+                            showTips();
+                            buttonColor();
+                        }
+                    }
+                    else {
+                        console.log('点击没返回成功');
+                    }
+
+                }
+            })
+        }
+        else{
+            this.serverRequestHeader = $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "jsonp",
+                success : function(data){
+                    if(data.errno === 0){
+                        // console.log(this.state.foucebool);
+                        if(optType == 'add'){
+                            _hmt.push(['_trackEvent', '点击关注', 'click']);
+                            setNewVersion();
+                            showTips();
+                            buttonColor();
+                        }
+                        else if(optType == 'cancel'){
+                            _hmt.push(['_trackEvent', '取消关注', 'click']);
+                            setStatusHavent();
+                            showTips();
+                            buttonColor();
+                        }
+                    }
+                    else {
+                        console.log('点击没返回成功');
+                    }
+
+                }
+            })
+        }
+
     }
     //添加滚动监听事件
     bindScrollListener = () =>{
@@ -192,6 +235,7 @@ class App extends Component {
             var scrollHeight = $(document).height();
             var windowHeight = $(this).height();
             if(scrollTop + windowHeight == scrollHeight){
+                // TODO 此处添加加载更多动画, 在数据加载完成之后取消动画
                 initData();
             }
         });
@@ -204,7 +248,7 @@ class App extends Component {
             queryObj[item[0]] = item[1];
         });
         // JSON.stringify(query);
-        console.log('parm='+JSON.stringify(queryObj));
+        //console.log('parm='+JSON.stringify(queryObj));
         query = queryObj;
     }
     componentDidMount = () => {
@@ -249,9 +293,6 @@ class App extends Component {
         });
         return (
             <div>
-                <Hammer onTap={this.handleSwipe}>
-                    <img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt=""/>
-                </Hammer>
                 <div className="mth-author">
                     <div className="mth-author-head">
                         <div className="author-info">
@@ -274,6 +315,11 @@ class App extends Component {
                 </div>
 
                 <div className="content">{rows}</div>
+                <div className="dropload-down">
+                    <div className="dropload-load">
+                        <span className="loading"></span>内容加载中</div>
+                </div>
+
             </div>
         )
     }

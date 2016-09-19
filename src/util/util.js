@@ -49,4 +49,44 @@ const getStatistics = ()=>{
     // return _hmt;
 }
 
-export {transferDate,getBrowserInfo};
+const getVersion = ()=>{
+    var back = 0;
+    if (window.baiduboxapp_version) {
+        back = window.baiduboxapp_version;
+    } else {
+        var str = navigator.userAgent;
+        var a;
+
+        if (a = /([\d+.]+)_(?:diordna|enohpi)_/.exec(str)) {
+            a = a[1].split('.');
+            back = a.reverse().join('.');
+        } else if (a = /baiduboxapp\/([\d+.]+)/.exec(str)) {
+            back = a[1];
+        }
+    }
+    return back;
+}
+const cmpVersion = (version1,version2)=>{
+    //version1==version2返回0；
+    //version1>version2返回1；
+    //小于返回-1
+    version2 += '';
+    version1 += '';
+
+    var a = version1.split('.'),
+        b = version2.split('.'),
+        i = 0,
+        len = Math.max(a.length, b.length);
+
+    for (; i < len; i++) {
+        if ((a[i] && !b[i] && parseInt(a[i]) > 0) || (parseInt(a[i]) > parseInt(b[i]))) {
+            return 1;
+        } else if ((b[i] && !a[i] && parseInt(b[i]) > 0) || (parseInt(a[i]) < parseInt(b[i]))) {
+            return -1;
+        }
+    }
+    return 0;
+}
+
+
+export {transferDate,getBrowserInfo,getVersion,cmpVersion};
