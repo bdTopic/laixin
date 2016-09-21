@@ -3,10 +3,12 @@ import ThreeItem from './component/itemThree/threeItem';
 import OneItem from './component/itemOne/oneItem';
 import NewOne from './component/newOne/newOne';
 import $ from 'jquery';
+import  ReactPullToRefresh from 'react-pull-to-refresh';
 import {getBrowserInfo} from './util/util';
 require('./app.less');
 
 let query ={};
+let count = 1;
 class App extends Component {
     constructor(props) {
         super(props);
@@ -17,8 +19,24 @@ class App extends Component {
             description:'',
             fouceStauts:'',
             maxIndex:'-1',
-            foucebool:''
+            foucebool:'',
+            items: [
+                <div key={'item-' + count}>Item {count++}</div>
+            ]
         };
+    }
+    handleRefresh(resolve, reject) {
+        let self = this;
+        setTimeout(function () {
+            console.log('refresh');
+        }, 500);
+    }
+    addItem() {
+        this.state.items.push(<div key={'item-' + count}>Item {count++}</div>);
+        this.setState({
+            items: this.state.items
+        });
+        return true;
     }
     _setState=(articleList)=>{
         if(articleList&&articleList.length>0) {
@@ -203,6 +221,9 @@ class App extends Component {
             }
         });
         return (
+            <ReactPullToRefresh onRefresh={this.handleRefresh} style={{
+                textAlign: 'center'
+            }}>
             <div>
                 <div className="list-head">
                     <div className="pageHeader">
@@ -225,6 +246,7 @@ class App extends Component {
                 </div>
                 <div className="content">{rows}</div>
             </div>
+            </ReactPullToRefresh>
         )
     }
 }
