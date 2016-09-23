@@ -27,6 +27,7 @@
     "react-hammerjs": "^0.5.0",
     "react-images": "^0.5.1",
     "react-pull-to-refresh": "^1.0.6",
+    "react-router": "^2.8.1",
     "react-s-alert": "^1.1.4"
   },
   "devDependencies": {

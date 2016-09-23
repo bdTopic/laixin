@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {transferDate} from '../../util/util';
+import Article from '../article/article';
 import $ from 'jquery';
 require('./newOne.less');
 
@@ -78,9 +79,13 @@ class OneItem extends Component {
         if(imgUrl) {
              urlFormate = this._urlFormate(imgUrl);
         }
+        let id2 = this.props.id;
+        let url = this.props.url;
+        let detailUrl = "http://just.baidu.com/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url;
+        //console.log(detailUrl);
         if(content.length > 150){
             return (
-                <li className="cnt-list">
+                <li className="cnt-list" onClick={e => this.props.switchEntry('detail', {id: this.props.entryProps.topicId})}>
                     <div className="typeNews">
                         <a className="text" id={"a"+itemData.id}>
                             <h2 className="short" id={"h2"+itemData.id}>{itemData.abstract.text}</h2>
@@ -101,18 +106,21 @@ class OneItem extends Component {
         else {
             return (
                 <li className="cnt-list">
-                    <div className="typeNews">
-                        <a className="text" id={"a"+itemData.id}>
-                            <h2 id={"ConText"+itemData.id}>{itemData.abstract.text}</h2>
-                            <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
-                                <img src = {urlFormate}  className="imgSize" />
-                            </div>
-                            <div className="text-extra">
-                                <div className="comment">{itemData.source}</div>
-                                <div className="time">{transferDate(itemData.time)}</div>
-                            </div>
-                        </a>
-                    </div>
+                    <a href={detailUrl}>
+                        <div className="typeNews">
+                            <a className="text" id={"a"+itemData.id}>
+                                <h2 id={"ConText"+itemData.id}>{itemData.abstract.text}</h2>
+                                <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                    <img src = {urlFormate}  className="imgSize" />
+                                </div>
+                                <div className="text-extra">
+                                    <div className="comment">{itemData.source}</div>
+                                    <div className="time">{transferDate(itemData.time)}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </a>
+
                 </li>
 
             )

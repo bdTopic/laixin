@@ -6,6 +6,10 @@ require('./newOne.less');
 
 class OneItem extends Component {
 
+    componentDidMout() {
+        const id = this.props.id;
+    }
+
     render() {
         let itemData = this.props.itemData;
         let imgSrc = [];
