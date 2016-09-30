@@ -7,6 +7,7 @@ import ReactPullToRefresh from 'react-pull-to-refresh';
 import {getVersion} from './util/util';
 import {cmpVersion} from './util/util';
 require('./app.less');
+import {transferDate} from './util/util';
 let myTestData = '{"errno":"0","data":{"site":"www.budejie.com","title":"\u6709\u56fe\u6709\u771f\u76f8\uff1a\u62ef\u6551\u4e86\u4e0a\u5e02\u516c\u53f8\u7684\u90a3\u4e24\u5957\u5b66\u533a\u623f\u957f\u5565\u6837\uff1f","time":1474545268,"desc":"","SmartNewsApp":{"content":[{"type": "text","data": "作为多年的“球迷”（足球的那个球，不是别的），胖编今天看到这个消息时，也是有点醉了。"},{"type": "image","data": {"original": {"url":"http://img1.cache.netease.com/cnews/2016/9/18/20160918175955d5888_550.jpg","width": 550,"height": 315}}},{"type": "text","data": "作为多年的“球迷”（足球的那个球，不是别的），胖编今天看到这个消息时，也是有点醉了。"},{"type": "image","data": {"original": {"url":"http://img1.cache.netease.com/cnews/2016/9/18/20160918175955d5888_550.jpg","width": 550,"height": 315}}},{"type": "image","data": {"original": {"url":"http://img1.cache.netease.com/cnews/2016/9/18/20160918175955d5888_550.jpg","width": 550,"height": 315}}}]},"NewsWebApp":{"content":[{"type": "text","data": "作为多年的“球迷”（足球的那个球，不是别的），胖编今天看到这个消息时，也是有点醉了。"},{"type": "image","data": {"original": {"url":"http://img1.cache.netease.com/cnews/2016/9/18/20160918175955d5888_550.jpg","width": 550,"height": 315}}}]},"NewsNativeApp":{"content":[{"type": "text","data": "作为多年的“球迷”（足球的那个球，不是别的），胖编今天看到这个消息时，也是有点醉了。"},{"type": "image","data": {"original": {"url":"http://img1.cache.netease.com/cnews/2016/9/18/20160918175955d5888_550.jpg","width": 550,"height": 315}}}]}}}';
 
 let query ={};
@@ -16,14 +17,13 @@ class App extends Component {
         super(props);
         this.state = {
             articleList: [],
-            title: '',
-            imgUrl:'',
+            articleTitle: '',
+            articleTime:'',
+            topicTitle:'',
+            topicImg:'',
             description:'',
-            fouceStauts:'',
-            maxIndex:'-1',
-            foucebool:'',
-            tipsContent:'',
             contentDom: [],
+
         };
     }
 
@@ -41,16 +41,30 @@ class App extends Component {
             this.setState({articleList: preArticleList});
         }
     }
+    getUrlParm = () =>{
+        var queryArr = location.search.substring(1).split("&");
+        let queryObj = query;
+        queryArr.map(function (item){
+            item = item.split('=');
+            queryObj[item[0]] = item[1];
+        });
+        // JSON.stringify(query);
+        //console.log('parm='+JSON.stringify(queryObj));
+        query = queryObj;
+        return query;
+    }
 
     renderArticle = (type, data, key)=> {
         let dom;
         switch (type) {
             case 'text': {
-                dom = <span key={key}>{data}</span>;
+                let key2 = Math.random();
+                dom =<p  key={key2} className="pArt"> <span key={key} className="conArt">{data}</span></p>;
                 break;
             }
             case 'image':{
-                dom = <img key={key} src={data.original.url}/>;
+                let key3 = Math.random();
+                dom =<p key={key3} className="pArt"> <img key={key} src={data.original.url} className="imgArt"/></p>;
                 break;
             }
 
@@ -72,10 +86,31 @@ class App extends Component {
         // console.log(doms);
         return doms;
     }
+    initHeader=()=>{
+        let self = this;
+        let url = '/restapi/public/topicmeta?version=1.0&topicid=';
+        url+=query.topicid;
+        this.serverRequestHeader = $.ajax({
+            type: "GET",
+            url: url,
+            dataType: "jsonp",
+            success : function(data){
+                // console.log(data);
+                if(data.response_params.topic_list.length > 0){
+                    var title = data.response_params.topic_list[0].title;
+                    var imgUrl = data.response_params.topic_list[0].logo.small;
+                    self.setState({topicTitle:title});
+                    self.setState({topicImg:imgUrl});
+                }
+
+            }
+        })
+    }
 
     getContent = () =>{
+        var self= this;
        //console.error(JSON.parse(myTestData));
-       /* let testData = JSON.parse(myTestData);
+       /*let testData = JSON.parse(myTestData);
         let smartNewsApp = testData.data.SmartNewsApp;
          let newsWebApp = testData.data.NewsWebApp;
          let newsNativeApp = testData.data.NewsNativeApp;
@@ -90,11 +125,13 @@ class App extends Component {
         console.log(result);
         this.setState({contentDom: result});*/
 
-        let url = 'http://just.baidu.com:/proxy/preview/n?m=app&v=focusdetail&tnp=json&url=http://www.budejie.com/detail-20814301.html';
+       let url = '/proxy/preview/n?m=app&v=focusdetail&tnp=json&url=';
+        url+=query.url;
+        console.log(url);
         this.serverRequestHeader = $.ajax({
             type: "GET",
             url: url,
-            dataType: "jsonp",
+            dataType: "json",
             success : function(input){
                 console.log(input);
                  let smartNewsApp = input.data.SmartNewsApp;
@@ -102,7 +139,10 @@ class App extends Component {
                  // let newsNativeApp = input.data.NewsNativeApp;
                  console.log(smartNewsApp);
 
-                 this.setState({contentDom: this.getContentDom(smartNewsApp)});
+                 self.setState({contentDom: self.getContentDom(smartNewsApp)});
+                 self.setState({articleTitle:input.data.title});
+                 self.setState({articleTime:input.data.time});
+                console.log(self.state.articleTitle);
             },
             error:  function(data){
                 console.log(data);
@@ -129,32 +169,41 @@ class App extends Component {
     componentDidMount = () => {
         this.getUrlParm();
         this.getContent();
+        this.initHeader();
 
     }
 
     render() {
-
+        let source = query.source;
+        let sourceName = decodeURI(source);
+        console.log(sourceName);
         return (
             <div className="pageWrapper">
-                <h1 className="mth-header">Baby因怀孕退出跑男顶替人竟是她 来头不小</h1>
+                <h1 className="mth-header">{this.state.articleTitle}</h1>
                 <h3 className="mth-extra-info">
                     <div className="auAticle">
                         <a href="" className="author-level">
-                            <img src="https://timg01.bdimg.com/timg?pa&imgtype=4&sec=1439619614&di=0d7f655d732f005a28bf62f7473e021b&quality=90&size=b100_100&src=http%3A%2F%2Fbos.nj.bpc.baidu.com%2Fv1%2Fmediaspot%2Fd4455914b69a26e33ee71cabf7a9c2c9.jpeg" alt=""/>
+                            <img src={this.state.topicImg} alt=""/>
                         </a>
                     </div>
                     <div className="detail">
                         <div className="topicName">
-                            <a href="" className="hrefName">每日笑话</a>
+                            <a href="" className="hrefName">{this.state.topicTitle}</a>
                         </div>
                         <div className="info">
-                            <span className="year">2016-09-21 09:39</span>
+                            <span className="mr5p">{sourceName}</span>
+                            <span className="year">{transferDate(this.state.articleTime)}</span>
                         </div>
                     </div>
                 </h3>
                 <div className="mth-editor-content">
                     {this.state.contentDom}
                 </div>
+                <footer  className="footer">
+                    <h2>版权声明</h2>
+                    <p>本文由百度转码生成，版权归原文著作权人享有。</p>
+                    <p>如涉版权问题及其他疑问请联系:shoujibaidu@baidu.com</p>
+                </footer>
             </div>
         )
     }

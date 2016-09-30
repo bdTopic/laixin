@@ -172,6 +172,7 @@ button {
 #topicImg {
     width: 100%;
     height: 100%;
+    border-radius: 50%;
 }
 
 /*弹性布局容器——图片容器*/
@@ -347,6 +348,15 @@ button {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
+.dropload-bottom {
+  display: none;
+  height: 50px;
+  position: relative;
+  overflow: hidden;
+  font-size: 12px;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
 .dropload-load {
   height: 50px;
   line-height: 50px;
@@ -382,6 +392,7 @@ button {
   height: 35px;
 }
 .auAticle {
+  vertical-align: top;
   height: 35px;
   width: 35px;
   margin: 0 5px 0 0;
@@ -436,4 +447,80 @@ button {
   height: 100%;
   position: relative;
   z-index: 2;
+}
+.imgArt {
+  max-width: 100%;
+
+}
+.conArt {
+
+}
+.pArt {
+  margin: 25.5px 0;
+  line-height: 1.5;
+}
+.mth-editor-content p:first-child {
+  margin: 14px 0 24px;
+}
+.mth-extra-info .auAticle a {
+  display: inherit;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+}
+.mth-extra-info .auAticle img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+.footer {
+  background: #eeeeee;
+  position: relative;
+  padding: 17px;
+}
+.footer h2 {
+  font-size: 13px;
+  height: 13px;
+  color: #333;
+  margin: 0 0 6px;
+  font-weight: 400;
+}
+.footer p {
+  font-size: 13px;
+  line-height: 20px;
+  color: #999;
+}
+.author:after {
+  border-radius: 50%;
+  border: 1px solid #eaeaea;
+}
+.mr5p {
+  margin-right: 5px;
+}
+.toast {
+  opacity: 0;
+  line-height: 1.5;
+  position:fixed;
+  top: 60%;
+  // left: 50%;
+  // -webkit-transform: translate(-50%, -50%);
+  //     -ms-transform: translate(-50%, -50%);
+  //         transform: translate(-50%, -50%);
+  margin-top: -52px;
+  // padding: 15px 20px;
+  padding: 6px 20px 6px 20px;
+  background-color: rgba(0, 0, 0, .8);
+  border-radius: 4px;
+  color: red;
+  text-align: center;
+  z-index: 0;
+  font-size: 16px;
+  transition: .6s;
+  // display: none;
+}
+.mth-toast-show {
+  transition: 0s;
+  opacity: 1;
+  z-index: 99;
 }

@@ -75,30 +75,37 @@ class OneItem extends Component {
         let id =  itemData.id;
        // console.log(content.length+'aaa'+ id);
         var imgUrl = itemData.abstract.image[0];
+        console.log(imgUrl)
         let urlFormate = '';
-        if(imgUrl) {
+        if(imgUrl.indexOf("gif") > 0) {
              urlFormate = this._urlFormate(imgUrl);
+        }
+        else {
+            urlFormate = imgUrl;
         }
         let id2 = this.props.id;
         let url = this.props.url;
-        let detailUrl = "http://just.baidu.com/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url;
-        //console.log(detailUrl);
+        let topicId =this.props.topcid;
+        let host = document.domain;
+        //console.log(host);
+        let detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url+"&topicId="+topicId;
+       // console.log(detailUrl+"1231312321312");
         if(content.length > 150){
             return (
                 <li className="cnt-list" onClick={e => this.props.switchEntry('detail', {id: this.props.entryProps.topicId})}>
-                    <div className="typeNews">
-                        <a className="text" id={"a"+itemData.id}>
-                            <h2 className="short" id={"h2"+itemData.id}>{itemData.abstract.text}</h2>
-                            <button onClick={this._changeText.bind(this,this.props.itemData.id)} id={'111' + itemData.id} className="buttonS">展开</button>
-                            <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
-                                <img src = {urlFormate}  className="imgSize" />
-                            </div>
-                            <div className="text-extra">
-                                <div className="comment">{itemData.source}</div>
-                                <div className="time">{transferDate(itemData.time)}</div>
-                            </div>
-                        </a>
-                    </div>
+                        <div className="typeNews">
+                            <a className="text" id={"a"+itemData.id}>
+                                <h2 className="short" id={"h2"+itemData.id}>{itemData.abstract.text}</h2>
+                                <button onClick={this._changeText.bind(this,this.props.itemData.id)} id={'111' + itemData.id} className="buttonS">展开</button>
+                                <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                    <img src = {urlFormate}  className="imgSize" />
+                                </div>
+                                <div className="text-extra">
+                                    <div className="comment">{itemData.source}</div>
+                                    <div className="time">{transferDate(itemData.time)}</div>
+                                </div>
+                            </a>
+                        </div>
                 </li>
 
             )
@@ -106,7 +113,6 @@ class OneItem extends Component {
         else {
             return (
                 <li className="cnt-list">
-                    <a href={detailUrl}>
                         <div className="typeNews">
                             <a className="text" id={"a"+itemData.id}>
                                 <h2 id={"ConText"+itemData.id}>{itemData.abstract.text}</h2>
@@ -119,7 +125,6 @@ class OneItem extends Component {
                                 </div>
                             </a>
                         </div>
-                    </a>
 
                 </li>
 

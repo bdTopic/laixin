@@ -15,7 +15,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            entryComponent: Detail,
+            entryComponent: Article,
             entryProps: {
                 topicId: query.topicid
             },

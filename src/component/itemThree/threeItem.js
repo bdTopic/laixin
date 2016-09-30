@@ -31,10 +31,15 @@ class ThreeItem extends Component {
         let len=imageSrc.length;
         let rows = [];
         let urlFormate = [];
+        let host = document.domain;
+        let id2 = this.props.id;
+        let url = this.props.url;
+        let topicId =this.props.topcid;
+        let detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url+"&topicId="+topicId;
         for(let i=0;i<len&&i<3;i++ ) {
-            urlFormate[i] = this.urlFormate(imageSrc[i]);
+            urlFormate[i] = imageSrc[i];
             rows.push(
-                <div className="imgItem" key={itemData.id+'img'+i}  onClick={this.change.bind(this, "#img"+i+"_"+itemData.id)} id={"img"+i+"_"+itemData.id}>
+                <div className="imgItem" key={itemData.id+'img'+i}  id={"img"+i+"_"+itemData.id}>
                     <img src = {urlFormate[i]} />
                 </div>
             );
@@ -42,7 +47,7 @@ class ThreeItem extends Component {
 
         return (
             <div className="cnt-list">
-                <div href="" className="typeNews">
+                <div href={detailUrl} className="typeNews">
                     <div className="text">
                         <h2>{itemData.abstract.text}</h2>
                         <div className="threeImgs">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ThreeItem from './component/itemThree/threeItem';
 import NewOne from './component/newOne/newOne';
+import ItemOne from './component/itemOne/oneItem';
 import Article from './component/article/article';
 import Detail from './articleDetail';
 import $ from 'jquery';
@@ -22,7 +23,9 @@ class App extends Component {
             fouceStauts:'',
             maxIndex:'-1',
             foucebool:'',
-            tipsContent:''
+            tipsContent:'',
+            topicid:'',
+            is_login:''
         };
     }
 
@@ -41,8 +44,8 @@ class App extends Component {
         }
     }
     //TODO 通用设置传参数 传参顺序无关
-    _setInfo=(title,imgUrl,description)=>{
-        this.setState({title:title,imgUrl:imgUrl,description:description});
+    _setInfo=(title,imgUrl,description,is_login)=>{
+        this.setState({title:title,imgUrl:imgUrl,description:description,is_login:is_login});
     }
     _setStatus=()=>{
         this.setState({fouceStauts:'已关注',foucebool:'cancel',tipsContent:'关注成功,在"我的关注"中可查看'})
@@ -55,6 +58,8 @@ class App extends Component {
         this.setState({fouceStauts:'已关注',foucebool:'cancel',tipsContent:'关注成功,在"关注"中可查看'})
     }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
+    //测试 三张图片 http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=0&topicid=1813627663
+    //  let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=0&topicid=';
     initData=()=>{
         let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
         url+=query.topicid;
@@ -62,12 +67,23 @@ class App extends Component {
         if(this.state.maxIndex!=='-1') {
             url += '&index=' + this.state.maxIndex;
         }
+       // console.log(this.state.maxIndex+"@111");
         this.serverRequest = $.ajax({
             type: "GET",
             url: url,
             dataType: "jsonp",
             success : function(data){
-                setState(data.response_params.article_list);
+                //if(data!='')
+                if(data.errno){
+                    console.log('已经到底了');
+                    $('.dropload-down').hide();
+                    $('.mth-toast-down').show();
+                }
+                else{
+                    setState(data.response_params.article_list);
+                }
+
+               // $('.dropload-down').hide();
             },
             error:  function(data){
                 console.error('error');
@@ -76,8 +92,12 @@ class App extends Component {
         });
     }
     initHeader=()=>{
+        let self = this;
         let url = 'http://just.baidu.com/restapi/public/topicmeta?version=1.0&topicid=';
-        url+=query.topicid;
+        url+= query.topicid;
+        //console.log(url+"@@@@@@000");
+        self.setState({topicid:query.topicid});
+        //console.log(this.state.topcid);
         let setInfo = this._setInfo.bind(this);
         this.serverRequestHeader = $.ajax({
             type: "GET",
@@ -89,7 +109,11 @@ class App extends Component {
                     var title = data.response_params.topic_list[0].title;
                     var imgUrl = data.response_params.topic_list[0].logo.small;
                     var description = data.response_params.topic_list[0].description;
-                    setInfo(title,imgUrl,description);
+                    var is_login = data.response_params.is_login;
+                    self.____islogin = is_login;
+                    console.log(self.____islogin);
+                    setInfo(title,imgUrl,description,is_login);
+                    self.getfouusStatus();
                 }
 
             }
@@ -97,10 +121,13 @@ class App extends Component {
     }
     getfouusStatus = ()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&store=uid_cuid';
+        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&store=uid_cuid&is_login=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
-
+        let islogin = this.____islogin;
+        console.log(this.____islogin);
+        url+=islogin;
+        console.log(url+"@@@@")
         this.serverRequestHeader = $.ajax({
             type: "GET",
             url: url,
@@ -256,9 +283,9 @@ class App extends Component {
         this.getUrlParm();
         this.initData();
         this.initHeader();
-        this.getfouusStatus();
+
         this.bindScrollListener();
-        console.log(this.props.entryProps);
+       // console.log(this.props.entryProps);
 
     }
     componentDidUpdate = () => {
@@ -280,21 +307,21 @@ class App extends Component {
         let description = this.state.description;
         let fouceStauts = this.state.fouceStauts;
         let tipsContent = this.state.tipsContent;
-        let entryProps = this.props.entryProps;
-        let switchEntry = this.props.switchEntry;
         let getUrlParm = this.props.getUrlParm;
+        let topcid = this.state.topicid;
         let rows = articleList.map(function (item) {
             let len = item.abstract.image.length;
             let id = item.id;
             let url = item.url;
+            let source = item.source;
             if (len <= 1) {//一张图片的情况
                 return(
-                    <NewOne itemData={item} key={item.id}  entryProps={entryProps} switchEntry={switchEntry} geUrlParm={getUrlParm} id={id} url={url}></NewOne>
+                    <ItemOne itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} ></ItemOne>
                 );
             }
             else if (len >= 2) {//2张及以上图片的情况
                 return(
-                    <ThreeItem itemData={item} key={item.id}></ThreeItem>
+                    <ThreeItem itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} source={source}></ThreeItem>
                 );
             }
         });
@@ -327,7 +354,11 @@ class App extends Component {
                     <div className="dropload-load">
                         <span className="loading"></span>内容加载中</div>
                 </div>
-
+                <div className="dropload-bottom">
+                    <div className="dropload-load">
+                        已经到底了~</div>
+                </div>
+                <span class="toast mth-toast-down">已经到底了!</span>
             </div>
         )
     }
