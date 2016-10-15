@@ -75,14 +75,18 @@ class OneItem extends Component {
         let id =  itemData.id;
        // console.log(content.length+'aaa'+ id);
         var imgUrl = itemData.abstract.image[0];
-        console.log(imgUrl)
         let urlFormate = '';
-        if(imgUrl.indexOf("gif") > 0) {
-             urlFormate = this._urlFormate(imgUrl);
+        if (imgUrl) {
+            if(imgUrl.indexOf("gif") > 0) {
+                urlFormate = this._urlFormate(imgUrl);
+            }
+            else {
+                urlFormate = imgUrl;
+            }
         }
-        else {
-            urlFormate = imgUrl;
-        }
+        console.log(imgUrl)
+
+
         let id2 = this.props.id;
         let url = this.props.url;
         let topicId =this.props.topcid;
@@ -97,9 +101,11 @@ class OneItem extends Component {
                             <a className="text" id={"a"+itemData.id}>
                                 <h2 className="short" id={"h2"+itemData.id}>{itemData.abstract.text}</h2>
                                 <button onClick={this._changeText.bind(this,this.props.itemData.id)} id={'111' + itemData.id} className="buttonS">展开</button>
-                                <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
-                                    <img src = {urlFormate}  className="imgSize" />
-                                </div>
+                                {
+                                    urlFormate && <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                        <img src = {urlFormate}  className="imgSize" />
+                                    </div>
+                                }
                                 <div className="text-extra">
                                     <div className="comment">{itemData.source}</div>
                                     <div className="time">{transferDate(itemData.time)}</div>
@@ -116,9 +122,11 @@ class OneItem extends Component {
                         <div className="typeNews">
                             <a className="text" id={"a"+itemData.id}>
                                 <h2 id={"ConText"+itemData.id}>{itemData.abstract.text}</h2>
-                                <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
-                                    <img src = {urlFormate}  className="imgSize" />
-                                </div>
+                                {
+                                    urlFormate && <div className="threeImg"  onClick={this.change.bind(this,this.props.itemData.id)} id={"img"+itemData.id}>
+                                        <img src = {urlFormate}  className="imgSize" />
+                                    </div>
+                                }
                                 <div className="text-extra">
                                     <div className="comment">{itemData.source}</div>
                                     <div className="time">{transferDate(itemData.time)}</div>

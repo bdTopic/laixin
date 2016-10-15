@@ -17,13 +17,13 @@ class OneItem extends Component {
         //console.log(detailUrl+'999999');
         if(itemData.abstract.image.length>0){
             return (
-                <li className="cnt-list">
-                    <a href={detailUrl} className="typeNews">
+                <li className="cnt-listOne">
+                    <a href={detailUrl} className="typeNewsOne">
                         <div className="img" style={{backgroundImage : 'url(' + itemData.abstract.image[0] + ')'}}>
 
                         </div>
                         <div className="texts">
-                            <h2>{itemData.abstract.text}</h2>
+                            <h2>{itemData.title}</h2>
                             <div className="text-extra">
                                 <div className="comment">{itemData.source}</div>
                                 <div className="time">{transferDate(itemData.time)}</div>
@@ -36,10 +36,10 @@ class OneItem extends Component {
         }
         else {
             return (
-                <li className="cnt-list">
-                    <a href={detailUrl} className="typeNews">
+                <li className="cnt-listOne">
+                    <a href={detailUrl} className="typeNewsOne">
                         <div className="texts">
-                            <h2>{itemData.abstract.text}</h2>
+                            <h2>{itemData.title}</h2>
                             <div className="text-extra">
                                 <div className="comment">{itemData.source}</div>
                                 <div className="time">{transferDate(itemData.time)}</div>

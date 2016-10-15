@@ -57,6 +57,13 @@ class App extends Component {
     _setNewVersion=()=>{
         this.setState({fouceStauts:'已关注',foucebool:'cancel',tipsContent:'关注成功,在"关注"中可查看'})
     }
+    _filterId=(item)=>{
+        if (item.abstract.image.length===0){
+            return false;
+        }
+        else
+            return true;
+    }
     //加载数据 nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&topicid=4086764444&ischecked=1
     //测试 三张图片 http://nj02-bccs-rdtest05.nj02.baidu.com:8082/doug/public/articlelist?version=1.0&ischecked=0&topicid=1813627663
     //  let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=0&topicid=';
@@ -64,6 +71,7 @@ class App extends Component {
         let url =  'http://just.baidu.com/doug/public/articlelist?version=1.0&ischecked=1&topicid=';
         url+=query.topicid;
         let setState = this._setState.bind(this);
+        let filterId = this._filterId.bind(this);
         if(this.state.maxIndex!=='-1') {
             url += '&index=' + this.state.maxIndex;
         }
@@ -80,7 +88,12 @@ class App extends Component {
                     $('.mth-toast-down').show();
                 }
                 else{
-                    setState(data.response_params.article_list);
+                    if(query.topicid=="4086764444"){
+                        setState(data.response_params.article_list.filter(filterId));
+                    }
+                    else
+                        setState(data.response_params.article_list);
+
                 }
 
                // $('.dropload-down').hide();
@@ -327,7 +340,7 @@ class App extends Component {
         });
 
         return (
-            <div>
+            <div className="bodyCon">
                 <div className="mth-author">
                     <div className="mth-author-head">
                         <div className="author-info">
@@ -354,11 +367,6 @@ class App extends Component {
                     <div className="dropload-load">
                         <span className="loading"></span>内容加载中</div>
                 </div>
-                <div className="dropload-bottom">
-                    <div className="dropload-load">
-                        已经到底了~</div>
-                </div>
-                <span class="toast mth-toast-down">已经到底了!</span>
             </div>
         )
     }
