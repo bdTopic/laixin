@@ -378,11 +378,15 @@ button {
 //详情页
 .pageWrapper {
   margin: auto;
+  position: relative;
+  padding-bottom: 80px;
+  min-height: 100%;
+  box-sizing: border-box;
 }
 .mth-header {
   margin: 24px 18px 0;
   line-height: 1.5;
-  font-size: 24px;
+  font-size: 20px;
   color: #333;
   font-weight: 700;
 }
@@ -477,8 +481,11 @@ button {
 }
 .footer {
   background: #eeeeee;
-  position: relative;
   padding: 17px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 .footer h2 {
   font-size: 13px;
@@ -524,4 +531,7 @@ button {
   transition: 0s;
   opacity: 1;
   z-index: 99;
+}
+body,html,#root{
+  height: 100%;
 }

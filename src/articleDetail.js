@@ -71,6 +71,13 @@ class App extends Component {
         }
         return dom;
     }
+    _filterId=(item)=>{
+        if (item.data.image.length===0){
+            return false;
+        }
+        else
+            return true;
+    }
     getContentDom = (smartNewsApp) => {
         let doms = [];
         // 如果包括image_urls
@@ -78,17 +85,30 @@ class App extends Component {
 
         }
         let key = Math.random();
-        smartNewsApp.content.map(item => {
+        smartNewsApp.content.map((item,index) => {
             let dom=this.renderArticle(item.type, item.data, key);
             key++;
             doms.push(dom);
+            if(index==smartNewsApp.content.length-1){
+                if(item.data.indexOf('微信')>0){
+                    doms.pop(dom);
+                    console.log('asd')
+                }
+                console.log('index='+index);
+            }
+
         });
+        //smartNewsApp.content.map(item => {
+        //let dom=this.renderArticle(item.type, item.data, key);
+        //key++;
+        //doms.push(dom);
+    //});
         // console.log(doms);
         return doms;
     }
     initHeader=()=>{
         let self = this;
-        let url = '/restapi/public/topicmeta?version=1.0&topicid=';
+        let url = 'http://just.baidu.com/restapi/public/topicmeta?version=1.0&topicid=';
         url+=query.topicid;
         this.serverRequestHeader = $.ajax({
             type: "GET",
@@ -125,7 +145,7 @@ class App extends Component {
         console.log(result);
         this.setState({contentDom: result});*/
 
-       let url = '/proxy/preview/n?m=app&v=focusdetail&tnp=json&url=';
+       let url = 'http://just.baidu.com/proxy/preview/n?m=app&v=focusdetail&tnp=json&url=';
         url+=query.url;
         console.log(url);
         this.serverRequestHeader = $.ajax({
@@ -177,6 +197,7 @@ class App extends Component {
         let source = query.source;
         let sourceName = decodeURI(source);
         console.log(sourceName);
+        console.log($('.pageWrapper').height());
         return (
             <div className="pageWrapper">
                 <h1 className="mth-header">{this.state.articleTitle}</h1>

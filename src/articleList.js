@@ -123,8 +123,13 @@ class App extends Component {
                     var imgUrl = data.response_params.topic_list[0].logo.small;
                     var description = data.response_params.topic_list[0].description;
                     var is_login = data.response_params.is_login;
+                    var third_id = data.response_params.third_id;
+                    var is_readable = data.response_params.is_readable;
                     self.____islogin = is_login;
-                    console.log(self.____islogin);
+                    self.third_Id = third_id;
+                    self.isreadable = is_readable;
+                    //console.log(self.third_Id);
+                    //console.log(self.____islogin);
                     setInfo(title,imgUrl,description,is_login);
                     self.getfouusStatus();
                 }
@@ -134,12 +139,16 @@ class App extends Component {
     }
     getfouusStatus = ()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&store=uid_cuid&is_login=';
+        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/get?type=card&sfrom=laixin&source=laixin_detail&store=uid_cuid&is_login=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         let islogin = this.____islogin;
+        let thirdId = this.third_Id;
+        console.log("thirdid"+thirdId);
         console.log(this.____islogin);
+        let urltopicId = '&third_id='+thirdId;
         url+=islogin;
+        url+=urltopicId;
         console.log(url+"@@@@")
         this.serverRequestHeader = $.ajax({
             type: "GET",
@@ -198,13 +207,17 @@ class App extends Component {
 
     focusTopic=()=>{
         let buttonColor = this._buttonColor.bind(this);
-        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&third_id=6000&source=laixin_detail&store=uid_cuid&op_type=';
+        let url = 'http://ext.baidu.com/api/subscribe/v1/relation/receive?type=card&sfrom=laixin&source=laixin_detail&store=uid_cuid&op_type=';
         let setStatus = this._setStatus.bind(this);
         let setStatusHavent = this._setStatusHavent.bind(this);
         let optType = this.state.foucebool;
         let showTips = this._showTips.bind(this);
+        let islogin = this.____islogin;
+        let thirdId = this.third_Id;
+        let urlid = '&is_login='+islogin+'&third_id='+thirdId;
         url += optType;
-        console.log(url);
+        url += urlid;
+        console.log("asdfasf"+url);
         let setNewVersion = this._setNewVersion.bind(this);
         //获取版本号:
         let version = getVersion();
@@ -322,6 +335,8 @@ class App extends Component {
         let tipsContent = this.state.tipsContent;
         let getUrlParm = this.props.getUrlParm;
         let topcid = this.state.topicid;
+        let is_readable = this.isreadable;
+        //console.log(is_readable);
         let rows = articleList.map(function (item) {
             let len = item.abstract.image.length;
             let id = item.id;
@@ -329,12 +344,12 @@ class App extends Component {
             let source = item.source;
             if (len <= 1) {//一张图片的情况
                 return(
-                    <ItemOne itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} ></ItemOne>
+                    <ItemOne itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} is_readable={is_readable} ></ItemOne>
                 );
             }
             else if (len >= 2) {//2张及以上图片的情况
                 return(
-                    <ThreeItem itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} source={source}></ThreeItem>
+                    <ThreeItem itemData={item} key={item.id}  geUrlParm={getUrlParm} id={id} url={url} topcid={topcid} source={source} is_readable={is_readable}></ThreeItem>
                 );
             }
         });

@@ -13,7 +13,14 @@ class OneItem extends Component {
         let source = this.props.itemData.source;
         let source1 = '百思不得其解';
         let sourceName = encodeURI(source);
-        let detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&topicid="+topicid+"&url="+url+"&source="+sourceName;
+        let topurl = this.props.is_readable;
+        let detailUrl = "";
+        if (topurl == false){
+            detailUrl = url;
+        }
+        else{
+            detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&topicid="+topicid+"&url="+url+"&source="+sourceName;
+        }
         //console.log(detailUrl+'999999');
         if(itemData.abstract.image.length>0){
             return (

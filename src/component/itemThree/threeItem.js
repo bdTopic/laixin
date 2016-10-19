@@ -8,7 +8,7 @@ class ThreeItem extends Component {
     change=(id)=>{
         var val = $(id).attr('class');
         var bool = val.indexOf('imgItem');
-        console.log(bool);
+        //console.log(bool);
         if(val.indexOf('imgItem')>=0){
             console.log(id);
             _hmt.push(['_trackEvent', '点击查看文章', 'click']);
@@ -34,8 +34,18 @@ class ThreeItem extends Component {
         let host = document.domain;
         let id2 = this.props.id;
         let url = this.props.url;
-        let topicId =this.props.topcid;
-        let detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url+"&topicId="+topicId;
+        let topicid =this.props.topcid;
+        let source = this.props.itemData.source;
+        let sourceName = encodeURI(source);
+        let topurl = this.props.is_readable;
+        let detailUrl = "";
+        if (topurl == false){
+            detailUrl = url;
+        }
+        else{
+            detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&topicid="+topicid+"&url="+url+"&source="+sourceName;
+        }
+       // let detailUrl = "http://"+host+"/doug/public/bdarticle?version=1&articleid="+id2+"&url="+url+"&topicId="+topicId;
         for(let i=0;i<len&&i<3;i++ ) {
             urlFormate[i] = imageSrc[i];
             rows.push(
